@@ -66,7 +66,45 @@ const startRegister = (data) => {
   };
 };
 
-export { startAuthenticate, startRegister };
+const startLogin = (data) => {
+  return async (dispatch) => {
+    try {
+      dispatch(removeError());
+      dispatch(startLoading());
+      const resp = await fetchWithoutToken('/auth', data, 'POST');
+      const { ok, uid, name, token, msg, error } = await resp.json();
+      if (ok) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('token-init-date', new Date().getTime());
+        dispatch(login({ uid, name }));
+      } else {
+        const message = msg || error || '';
+        dispatch(setError(message));
+      }
+    } catch (error) {
+      dispatch(setError(error));
+    }
+    dispatch(finishLoading());
+  };
+};
+
+const logout = () => ({
+  type: types.auth.logout,
+});
+
+const startLogout = () => {
+  return async (dispatch) => {
+    dispatch(startLoading());
+    dispatch(removeError());
+    localStorage.removeItem('token');
+    localStorage.removeItem('token-init-date');
+    dispatch(logout());
+    // dispatch(noteLogout());
+    dispatch(finishLoading());
+  };
+};
+
+export { startAuthenticate, startRegister, startLogin, startLogout };
 
 // import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 // import types from '../types/types';

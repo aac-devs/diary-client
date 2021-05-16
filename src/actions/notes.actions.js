@@ -20,7 +20,7 @@ export const startLoadingNotes = () => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
-      const resp = await fetchWithToken('notes');
+      const resp = await fetchWithToken('/notes');
       const { ok, notes, msg } = await resp.json();
       if (ok) {
         dispatch(loadNotes(notes));

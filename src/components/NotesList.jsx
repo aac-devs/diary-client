@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import NoteCard from './NoteCard';
 // import styled from 'styled-components';
 import { selectNewNote, startDeleteAllNotes } from '../actions/notes.actions';
+import { startLogout } from '../actions/auth.actions';
 // import { startLogout } from '../actions/auth.actions';
 
 // const Box = styled.div`
@@ -21,7 +22,7 @@ const NotesList = () => {
   };
 
   const handleLogout = () => {
-    // dispatch(startLogout());
+    dispatch(startLogout());
   };
 
   const handleDeleteAllNotes = () => {

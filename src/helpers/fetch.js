@@ -1,10 +1,9 @@
 // const baseUrl = process.env.PROD_API_URL;
-// const baseUrl = 'https://aac-diary-app.herokuapp.com/api';
-const baseUrl = 'http://localhost:8080/api';
+const baseUrl = 'https://aac-diary-app.herokuapp.com/api';
+// const baseUrl = 'http://localhost:8080/api';
 
 const fetchWithToken = (endpoint, data, method = 'GET') => {
   const url = `${baseUrl}${endpoint}`;
-  // console.log({ url });
   const token = localStorage.getItem('token') || '';
   if (method === 'GET') {
     return fetch(url, {
