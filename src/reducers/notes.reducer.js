@@ -42,8 +42,8 @@ const notesReducer = (state = initialState, action) => {
     case types.notes.load:
       return {
         ...state,
-        count: action.payload.count,
-        notes: [...action.payload.rows],
+        count: action.payload.length,
+        notes: action.payload,
       };
     case types.notes.updated:
       return {

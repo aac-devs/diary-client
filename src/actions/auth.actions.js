@@ -1,5 +1,6 @@
 import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 import types from '../types/types';
+import { noteLogout } from './notes.actions';
 import {
   finishLoading,
   removeError,
@@ -7,7 +8,7 @@ import {
   startLoading,
 } from './ui.actions';
 
-const login = ({ uid, userName: name }) => ({
+const login = ({ uid, name }) => ({
   type: types.auth.login,
   payload: { uid, name },
 });
@@ -99,7 +100,7 @@ const startLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('token-init-date');
     dispatch(logout());
-    // dispatch(noteLogout());
+    dispatch(noteLogout());
     dispatch(finishLoading());
   };
 };

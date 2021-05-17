@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import dayjs from 'dayjs';
 import { fetchWithToken } from '../helpers/fetch';
 import types from '../types/types';
 import {
@@ -14,6 +15,15 @@ const loadNotes = (notes) => ({
   payload: notes,
 });
 
+const arrangeNotesList = (notes) => {
+  return notes.map((n) => {
+    const { createdAt, updatedAt, uid, ...rest } = n;
+    rest.date = dayjs(updatedAt).format('MM-DD-YYYY');
+    rest.image = '';
+    return rest;
+  });
+};
+
 // Inicia la petición al backend para cargar todas las notas del usuario logueado
 export const startLoadingNotes = () => {
   return async (dispatch) => {
@@ -21,11 +31,13 @@ export const startLoadingNotes = () => {
       dispatch(startLoading());
       dispatch(removeError());
       const resp = await fetchWithToken('/notes');
-      const { ok, notes, msg } = await resp.json();
+      const { ok, notes, msg, error } = await resp.json();
+      // console.log({ ok, notes, msg });
       if (ok) {
-        dispatch(loadNotes(notes));
+        dispatch(loadNotes(arrangeNotesList(notes.rows)));
       } else {
-        dispatch(setError(msg));
+        const message = msg || error || '';
+        dispatch(setError(message));
       }
       dispatch(finishLoading());
     } catch (error) {
@@ -55,6 +67,7 @@ export const selectNewNote = () => {
       title: '',
       body: '',
       date: new Date().getTime(),
+      image: '',
     };
     dispatch(activeNote(null, newNote));
   };
@@ -88,16 +101,20 @@ export const startSaveNote = (data) => {
       dispatch(startLoading());
       dispatch(removeError());
       const {
-        active: { id, date },
+        active: { id, image },
       } = getState().notes;
       const newData = data;
-      newData.date = date;
-      const endpoint = id ? `notes/${id}` : 'notes';
+      newData.image = image;
+      // newData.date = dayjs().format('MM-DD-YYYY');
+      console.log({ id, newData });
+      const endpoint = id ? `/notes/${id}` : '/notes';
       const method = id ? 'PUT' : 'POST';
       const resp = await fetchWithToken(endpoint, newData, method);
-      const { ok, note, msg } = await resp.json();
+      const { ok, note, msg, error } = await resp.json();
+      console.log({ ok, note, msg, error });
       if (ok) {
-        const { id: newId, uid, ...rest } = note;
+        const { id: newId, uid, updatedAt, createdAt, ...rest } = note;
+        rest.date = updatedAt;
         if (method === 'POST') {
           dispatch(addNewNote(newId, rest));
         } else {
@@ -105,7 +122,8 @@ export const startSaveNote = (data) => {
         }
         dispatch(activeNote(newId, rest));
       } else {
-        dispatch(setError(msg));
+        const message = msg || error || '';
+        dispatch(setError(message));
       }
       dispatch(finishLoading());
     } catch (error) {
@@ -151,7 +169,7 @@ export const startDeleteAllNotes = () => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
-      const resp = await fetchWithToken('notes', undefined, 'DELETE');
+      const resp = await fetchWithToken('/notes', undefined, 'DELETE');
       const { ok, msg } = await resp.json();
       if (ok) {
         dispatch(noteLogout());
