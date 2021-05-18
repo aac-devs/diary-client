@@ -20,7 +20,6 @@ const arrangeNotesList = (notes) => {
   return notes.map((n) => {
     const { createdAt, updatedAt, uid, ...rest } = n;
     rest.date = dayjs(updatedAt).format('MM-DD-YYYY');
-    rest.image = '';
     return rest;
   });
 };

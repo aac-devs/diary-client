@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+  Avatar,
   AppBar,
   Toolbar,
   Typography,
@@ -16,6 +17,7 @@ import {
   Replay as ReplayIcon,
 } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 
 import {
   deactiveNote,
@@ -63,6 +65,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '30px',
     width: '30px',
     margin: '0px',
+  },
+  square: {
+    backgroundColor: '#fff',
+    height: '150px',
+    width: '150px',
+    margin: '5px',
   },
 }));
 
@@ -191,6 +199,10 @@ const ActiveNote = () => {
           value={body}
           onChange={handleInputChange}
         />
+        <br />
+        <Avatar variant="square" className={classes.square} src={note.image}>
+          <CropOriginalIcon color="disabled" fontSize="large" />
+        </Avatar>
       </div>
     </div>
   );
