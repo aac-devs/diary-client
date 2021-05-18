@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import dayjs from 'dayjs';
 import { fetchWithToken } from '../helpers/fetch';
+import fileUpload from '../helpers/fileUpload';
 import types from '../types/types';
 import {
   finishLoading,
@@ -149,7 +150,7 @@ export const startDeleting = (id) => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
-      const resp = await fetchWithToken(`notes/${id}`, undefined, 'DELETE');
+      const resp = await fetchWithToken(`/notes/${id}`, undefined, 'DELETE');
       const { ok, msg } = await resp.json();
       if (ok) {
         dispatch(deleteNote(id));
@@ -180,5 +181,17 @@ export const startDeleteAllNotes = () => {
     } catch (error) {
       console.log('Something went wrong fetching data!');
     }
+  };
+};
+
+export const startUploading = (file) => {
+  return async (dispatch, getState) => {
+    const { active } = getState().notes;
+    const fileUrl = await fileUpload(file);
+    active.image = fileUrl;
+    const { id, ...rest } = active;
+    dispatch(activeNote(id, rest));
+    // console.log({ fileUrl });
+    // console.log({ active });
   };
 };

@@ -6,16 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import { startLoadingNotes } from '../actions/notes.actions';
 import ActiveNote from './ActiveNote';
 import NotesList from './NotesList';
-// import NothingSelected from './NothingSelected';
+import Loading from './Loading';
+import NothingSelected from './NothingSelected';
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    // backgroundColor: 'cyan',
     height: '100%',
   },
   grid: {
-    // backgroundColor: 'lime',
     height: '100%',
   },
   sidebar: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles(() => ({
 const HomePage = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  // const { loading } = useSelector((state) => state.ui);
+  const { loading } = useSelector((state) => state.ui);
   const { active } = useSelector((state) => state.notes);
   const matches = useMediaQuery('(max-width:600px)');
 
@@ -37,8 +36,11 @@ const HomePage = () => {
     dispatch(startLoadingNotes());
   }, [dispatch]);
 
+  console.log({ loading });
+
   return (
     <div className={classes.root}>
+      {loading && <Loading />}
       <Grid container spacing={0} className={classes.grid}>
         <Grid
           item
@@ -56,11 +58,10 @@ const HomePage = () => {
           md={8}
           className={classes.main}
         >
-          {active && <ActiveNote />}
+          {active ? <ActiveNote /> : !matches && <NothingSelected />}
         </Grid>
       </Grid>
-      {/* {loading && <h5>Espere...</h5>}
-      {!active && <NothingSelected />} */}
+      {/* {loading && <h5>Espere...</h5>} */}
     </div>
   );
 };

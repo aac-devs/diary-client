@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
@@ -13,6 +14,7 @@ import {
   startDeleteAllNotes,
 } from '../actions/notes.actions';
 import { startLogout } from '../actions/auth.actions';
+import ConfirmDialog from './ConfirmDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +64,7 @@ const NotesList = () => {
   const { notes } = useSelector((state) => state.notes);
   const { name } = useSelector((state) => state.auth);
   const classes = useStyles();
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleAddNew = () => {
     dispatch(deactiveNote());
@@ -73,11 +76,26 @@ const NotesList = () => {
   };
 
   const handleDeleteAllNotes = () => {
-    dispatch(startDeleteAllNotes());
+    setOpenDeleteDialog(true);
   };
+
+  const handleDialogResponse = (agree) => {
+    setOpenDeleteDialog(false);
+    if (agree) {
+      dispatch(startDeleteAllNotes());
+    }
+  };
+
+  console.log({ notes });
 
   return (
     <div className={classes.root}>
+      <ConfirmDialog
+        isOpen={openDeleteDialog}
+        handleClose={handleDialogResponse}
+        title="Delete All Notes"
+        message="Are you sure you want to delete all notes?"
+      />
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <PersonIcon className={classes.userIcon} />

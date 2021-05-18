@@ -66,6 +66,8 @@ const NoteCard = ({ id, title, body, date, image }) => {
 
   const handleKeyDown = () => {};
 
+  console.log({ image });
+
   return (
     <div
       className={classes.card}
@@ -75,7 +77,7 @@ const NoteCard = ({ id, title, body, date, image }) => {
       onKeyPress={handleKeyDown}
     >
       <div>
-        <Avatar variant="square" className={classes.square}>
+        <Avatar variant="square" className={classes.square} src={image}>
           <CropOriginalIcon color="disabled" fontSize="large" />
         </Avatar>
       </div>

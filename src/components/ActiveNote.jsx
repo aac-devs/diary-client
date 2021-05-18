@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -19,10 +19,12 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import {
   deactiveNote,
-  // startDeleting,
+  startDeleting,
   startSaveNote,
+  startUploading,
 } from '../actions/notes.actions';
 import useCustomForm from '../hooks/useCustomForm';
+import ConfirmDialog from './ConfirmDialog';
 // import { NothingSelected } from './NothingSelected';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,6 +74,7 @@ const ActiveNote = () => {
   const { title, body } = formValues;
   const classes = useStyles();
   const matches = useMediaQuery('(max-width:600px)');
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const activeId = useRef(note.id);
 
@@ -95,22 +98,61 @@ const ActiveNote = () => {
     );
   };
 
-  // const handleDeleteNote = () => {
-  //   dispatch(startDeleting(note.id));
-  //   dispatch(deactiveNote());
-  // };
+  const handleDeleteNote = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleDialogResponse = (agree) => {
+    setOpenDeleteDialog(false);
+    if (agree) {
+      dispatch(startDeleting(note.id));
+      dispatch(deactiveNote());
+    }
+  };
+
+  const handlePictureUpload = () => {
+    document.querySelector('#fileSelector').click();
+    console.log('Picture upload');
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      dispatch(startUploading(file));
+    }
+  };
 
   return (
     <div className={classes.root}>
+      <ConfirmDialog
+        isOpen={openDeleteDialog}
+        handleClose={handleDialogResponse}
+        title="Delete Note"
+        message="Are you sure you want to delete this note?"
+      />
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Typography variant="subtitle1" className={classes.title}>
             {dayjs(note.date).format('dddd, MMMM DD[th], YYYY')}
           </Typography>
-          <Button color="inherit" className={classes.iconBtn}>
+          <input
+            id="fileSelector"
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+          <Button
+            color="inherit"
+            className={classes.iconBtn}
+            onClick={handlePictureUpload}
+          >
             <ImageSearchIcon className={classes.icon} />
           </Button>
-          <Button color="inherit" className={classes.iconBtn}>
+          <Button
+            color="inherit"
+            className={classes.iconBtn}
+            onClick={handleDeleteNote}
+          >
             <DeleteForeverIcon className={classes.icon} />
           </Button>
           <Button color="inherit" className={classes.iconBtn}>
