@@ -3,6 +3,7 @@ import types from '../types/types';
 const initialState = {
   loading: false,
   msgError: null,
+  msgSuccess: null,
 };
 
 const uiReducer = (state = initialState, action) => {
@@ -16,6 +17,16 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         msgError: null,
+      };
+    case types.ui.setSuccess:
+      return {
+        ...state,
+        msgSuccess: action.payload,
+      };
+    case types.ui.removeSuccess:
+      return {
+        ...state,
+        msgSuccess: null,
       };
     case types.ui.startLoading:
       return {

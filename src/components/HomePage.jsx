@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -8,6 +8,8 @@ import ActiveNote from './ActiveNote';
 import NotesList from './NotesList';
 import Loading from './Loading';
 import NothingSelected from './NothingSelected';
+import CustomizedSnackbars from './Snackbar';
+import { removeSuccess } from '../actions/ui.actions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,19 +30,35 @@ const useStyles = makeStyles(() => ({
 const HomePage = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { loading } = useSelector((state) => state.ui);
+  const { loading, msgError, msgSuccess } = useSelector((state) => state.ui);
   const { active } = useSelector((state) => state.notes);
   const matches = useMediaQuery('(max-width:600px)');
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   useEffect(() => {
     dispatch(startLoadingNotes());
   }, [dispatch]);
 
-  console.log({ loading });
+  useEffect(() => {
+    if (msgError || msgSuccess) {
+      setIsNotificationOpen(true);
+    }
+  }, [msgError, msgSuccess]);
+
+  const handleClose = () => {
+    setIsNotificationOpen(false);
+    dispatch(removeSuccess());
+  };
 
   return (
     <div className={classes.root}>
       {loading && <Loading />}
+      <CustomizedSnackbars
+        isOpen={isNotificationOpen}
+        handleClose={handleClose}
+        type={msgError ? 'error' : 'success'}
+        message={msgError || msgSuccess}
+      />
       <Grid container spacing={0} className={classes.grid}>
         <Grid
           item

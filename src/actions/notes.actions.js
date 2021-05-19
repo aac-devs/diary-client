@@ -6,7 +6,9 @@ import types from '../types/types';
 import {
   finishLoading,
   removeError,
+  removeSuccess,
   setError,
+  setSuccess,
   startLoading,
 } from './ui.actions';
 
@@ -19,7 +21,7 @@ const loadNotes = (notes) => ({
 const arrangeNotesList = (notes) => {
   return notes.map((n) => {
     const { createdAt, updatedAt, uid, ...rest } = n;
-    rest.date = dayjs(updatedAt).format('MM-DD-YYYY');
+    rest.date = dayjs(createdAt).format('MM-DD-YYYY');
     return rest;
   });
 };
@@ -30,19 +32,21 @@ export const startLoadingNotes = () => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
+      dispatch(removeSuccess());
       const resp = await fetchWithToken('/notes');
       const { ok, notes, msg, error } = await resp.json();
-      // console.log({ ok, notes, msg });
       if (ok) {
         dispatch(loadNotes(arrangeNotesList(notes.rows)));
+        dispatch(setSuccess('Notes readed successfully!'));
       } else {
         const message = msg || error || '';
         dispatch(setError(message));
       }
-      dispatch(finishLoading());
     } catch (error) {
       console.log('Something went wrong fetching data!');
+      dispatch(setError('Something went wrong fetching data!'));
     }
+    dispatch(finishLoading());
   };
 };
 
@@ -100,35 +104,36 @@ export const startSaveNote = (data) => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
+      dispatch(removeSuccess());
       const {
         active: { id, image },
       } = getState().notes;
       const newData = data;
       newData.image = image;
-      // newData.date = dayjs().format('MM-DD-YYYY');
-      console.log({ id, newData });
       const endpoint = id ? `/notes/${id}` : '/notes';
       const method = id ? 'PUT' : 'POST';
       const resp = await fetchWithToken(endpoint, newData, method);
       const { ok, note, msg, error } = await resp.json();
-      console.log({ ok, note, msg, error });
       if (ok) {
         const { id: newId, uid, updatedAt, createdAt, ...rest } = note;
-        rest.date = updatedAt;
+        rest.date = createdAt;
         if (method === 'POST') {
           dispatch(addNewNote(newId, rest));
+          dispatch(setSuccess('Note created successfully!'));
         } else {
           dispatch(refreshNote(newId, rest));
+          dispatch(setSuccess('Note updated successfully!'));
         }
         dispatch(activeNote(newId, rest));
       } else {
         const message = msg || error || '';
         dispatch(setError(message));
       }
-      dispatch(finishLoading());
     } catch (error) {
       console.log('Something went wrong fetching data!');
+      dispatch(setError('Something went wrong fetching data!'));
     }
+    dispatch(finishLoading());
   };
 };
 
@@ -149,17 +154,20 @@ export const startDeleting = (id) => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
+      dispatch(removeSuccess());
       const resp = await fetchWithToken(`/notes/${id}`, undefined, 'DELETE');
       const { ok, msg } = await resp.json();
       if (ok) {
         dispatch(deleteNote(id));
+        dispatch(setSuccess('Note deleted successfully!'));
       } else {
         dispatch(setError(msg));
       }
-      dispatch(finishLoading());
     } catch (error) {
       console.log('Something went wrong fetching data!');
+      dispatch(setError('Something went wrong fetching data!'));
     }
+    dispatch(finishLoading());
   };
 };
 
@@ -169,28 +177,39 @@ export const startDeleteAllNotes = () => {
     try {
       dispatch(startLoading());
       dispatch(removeError());
+      dispatch(removeSuccess());
       const resp = await fetchWithToken('/notes', undefined, 'DELETE');
       const { ok, msg } = await resp.json();
       if (ok) {
         dispatch(noteLogout());
+        dispatch(setSuccess('Notes deleted successfully!'));
       } else {
         dispatch(setError(msg));
       }
-      dispatch(finishLoading());
     } catch (error) {
       console.log('Something went wrong fetching data!');
+      dispatch(setError('Something went wrong fetching data!'));
     }
+    dispatch(finishLoading());
   };
 };
 
 export const startUploading = (file) => {
   return async (dispatch, getState) => {
-    const { active } = getState().notes;
-    const fileUrl = await fileUpload(file);
-    active.image = fileUrl;
-    const { id, ...rest } = active;
-    dispatch(activeNote(id, rest));
-    // console.log({ fileUrl });
-    // console.log({ active });
+    try {
+      dispatch(startLoading());
+      dispatch(removeError());
+      dispatch(removeSuccess());
+      const { active } = getState().notes;
+      const fileUrl = await fileUpload(file);
+      active.image = fileUrl;
+      const { id, ...rest } = active;
+      dispatch(activeNote(id, rest));
+      dispatch(setSuccess('Image loaded successfully!'));
+    } catch (error) {
+      console.log('Something went wrong fetching data!');
+      dispatch(setError('Something went wrong fetching data!'));
+    }
+    dispatch(finishLoading());
   };
 };

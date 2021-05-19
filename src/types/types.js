@@ -8,6 +8,8 @@ const types = {
   ui: {
     setError: '[UI] Set error',
     removeError: '[UI] Remove error',
+    setSuccess: '[UI] Set success',
+    removeSuccess: '[UI] Remove success',
     startLoading: '[UI] Start loading',
     finishLoading: '[UI] Finish loading',
   },
