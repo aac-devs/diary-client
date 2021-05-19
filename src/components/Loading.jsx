@@ -1,24 +1,24 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    position: 'fixed',
+    top: '30%',
+    left: '50%',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 const Loading = () => {
+  const classes = useStyles();
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: '30%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      <Loader
-        type="TailSpin"
-        color="#e91e63"
-        height={100}
-        width={100}
-        // timeout={3000}
-      />
+    <div className={classes.root}>
+      <CircularProgress color="secondary" />
     </div>
   );
 };

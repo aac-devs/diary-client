@@ -7,6 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip';
 import NoteCard from './NoteCard';
 import {
   deactiveNote,
@@ -102,20 +103,29 @@ const NotesList = () => {
           <Typography variant="subtitle1" className={classes.title}>
             {name}
           </Typography>
-          <Button
-            color="inherit"
-            onClick={handleAddNew}
-            className={classes.iconBtn}
+          <Tooltip
+            title="Add new note"
+            aria-label="add"
+            arrow
+            placement="bottom"
           >
-            <AddIcon className={classes.icon} />
-          </Button>
-          <Button
-            color="inherit"
-            onClick={handleLogout}
-            className={classes.iconBtn}
-          >
-            <ExitToAppIcon className={classes.icon} />
-          </Button>
+            <Button
+              color="inherit"
+              onClick={handleAddNew}
+              className={classes.iconBtn}
+            >
+              <AddIcon className={classes.icon} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Logout" aria-label="add" arrow placement="bottom">
+            <Button
+              color="inherit"
+              onClick={handleLogout}
+              className={classes.iconBtn}
+            >
+              <ExitToAppIcon className={classes.icon} />
+            </Button>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <div className={classes.noteList}>

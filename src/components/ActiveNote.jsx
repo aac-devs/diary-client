@@ -11,6 +11,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 import {
   Save as SaveIcon,
   ImageSearch as ImageSearchIcon,
@@ -149,32 +150,60 @@ const ActiveNote = () => {
             onChange={handleFileChange}
             style={{ display: 'none' }}
           />
-          <Button
-            color="inherit"
-            className={classes.iconBtn}
-            onClick={handlePictureUpload}
+          <Tooltip
+            title="Add an image to the note"
+            aria-label="add"
+            arrow
+            placement="bottom"
           >
-            <ImageSearchIcon className={classes.icon} />
-          </Button>
-          <Button
-            color="inherit"
-            className={classes.iconBtn}
-            onClick={handleDeleteNote}
-          >
-            <DeleteForeverIcon className={classes.icon} />
-          </Button>
-          <Button color="inherit" className={classes.iconBtn}>
-            <SaveIcon className={classes.icon} onClick={handleSaveNote} />
-          </Button>
-          {matches && (
             <Button
               color="inherit"
               className={classes.iconBtn}
-              type="button"
-              onClick={handleBackToList}
+              onClick={handlePictureUpload}
             >
-              <ReplayIcon className={classes.icon} />
+              <ImageSearchIcon className={classes.icon} />
             </Button>
+          </Tooltip>
+          <Tooltip
+            title="Delete current note"
+            aria-label="add"
+            arrow
+            placement="bottom"
+          >
+            <Button
+              color="inherit"
+              className={classes.iconBtn}
+              onClick={handleDeleteNote}
+            >
+              <DeleteForeverIcon className={classes.icon} />
+            </Button>
+          </Tooltip>
+          <Tooltip
+            title="Update current note"
+            aria-label="add"
+            arrow
+            placement="bottom"
+          >
+            <Button color="inherit" className={classes.iconBtn}>
+              <SaveIcon className={classes.icon} onClick={handleSaveNote} />
+            </Button>
+          </Tooltip>
+          {matches && (
+            <Tooltip
+              title="Back to note list"
+              aria-label="add"
+              arrow
+              placement="bottom"
+            >
+              <Button
+                color="inherit"
+                className={classes.iconBtn}
+                type="button"
+                onClick={handleBackToList}
+              >
+                <ReplayIcon className={classes.icon} />
+              </Button>
+            </Tooltip>
           )}
         </Toolbar>
       </AppBar>
