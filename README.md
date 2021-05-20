@@ -1,5 +1,13 @@
 # Diary App
 
+<div>
+<p style = 'text-align:center;'>
+<a href='https://aac-diary-app.herokuapp.com'>
+<img src="https://res.cloudinary.com/aac-devs-data/image/upload/v1621513713/portfolio/DiaryApp_upj8bb.png" alt="Diary App" width="400px">
+</a>
+</p>
+</div>
+
 ## Description
 
 Diary App es una aplicación que permite crear, actualizar y eliminar notas diarias, a modo de agenda, para usuarios registrados o logueados, permite además, agregarle una imagen a cada nota creada. Cada nota contiene título, descripción, imagen y fecha de creación. La información de usuarios y notas se guardan en una base de datos. Usa autenticación de usuario a través de tokens (JWT).
