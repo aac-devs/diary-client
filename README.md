@@ -8,6 +8,15 @@
 </p>
 </div>
 
+Puede usar el siguiente usuario para loguearse en la aplicación (o crearse uno nuevo):
+
+_You can use the following user to login to the application (or create a new one):_
+
+```bash
+email: andres@mail.com
+password: 123456
+```
+
 ## Description
 
 Diary App es una aplicación que permite crear, actualizar y eliminar notas diarias, a modo de agenda, para usuarios registrados o logueados, permite además, agregarle una imagen a cada nota creada. Cada nota contiene título, descripción, imagen y fecha de creación. La información de usuarios y notas se guardan en una base de datos. Usa autenticación de usuario a través de tokens (JWT).
