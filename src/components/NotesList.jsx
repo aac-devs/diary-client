@@ -87,8 +87,6 @@ const NotesList = () => {
     }
   };
 
-  console.log({ notes });
-
   return (
     <div className={classes.root}>
       <ConfirmDialog

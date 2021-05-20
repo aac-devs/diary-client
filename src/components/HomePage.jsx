@@ -9,7 +9,7 @@ import NotesList from './NotesList';
 import Loading from './Loading';
 import NothingSelected from './NothingSelected';
 import CustomizedSnackbars from './Snackbar';
-import { removeSuccess } from '../actions/ui.actions';
+import { removeError, removeSuccess } from '../actions/ui.actions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -48,6 +48,7 @@ const HomePage = () => {
   const handleClose = () => {
     setIsNotificationOpen(false);
     dispatch(removeSuccess());
+    dispatch(removeError());
   };
 
   return (

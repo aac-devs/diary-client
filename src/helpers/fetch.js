@@ -1,4 +1,3 @@
-// const baseUrl = process.env.PROD_API_URL;
 const baseUrl = 'https://aac-diary-app.herokuapp.com/api';
 // const baseUrl = 'http://localhost:8080/api';
 

@@ -66,8 +66,6 @@ const NoteCard = ({ id, title, body, date, image }) => {
 
   const handleKeyDown = () => {};
 
-  console.log({ image });
-
   return (
     <div
       className={classes.card}

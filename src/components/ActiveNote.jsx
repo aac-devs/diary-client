@@ -121,7 +121,6 @@ const ActiveNote = () => {
 
   const handlePictureUpload = () => {
     document.querySelector('#fileSelector').click();
-    console.log('Picture upload');
   };
 
   const handleFileChange = (e) => {
