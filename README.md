@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Diary App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Diary App es una aplicación que permite crear, actualizar y eliminar notas diarias, a modo de agenda, para usuarios registrados o logueados, permite además, agregarle una imagen a cada nota creada. Cada nota contiene título, descripción, imagen y fecha de creación. La información de usuarios y notas se guardan en una base de datos. Usa autenticación de usuario a través de tokens (JWT).
 
-In the project directory, you can run:
+_Diary App is an application that allows you to create, update and delete daily notes, as an agenda, for registered or logged in users, it also allows you to add an image to each note created. Each note contains title, description, image, and creation date. User information and notes are stored in a database. Use user authentication through tokens (JWT)._
 
-### `yarn start`
+## Run app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Luego de [ejecutar](https://aac-diary-app.herokuapp.com) la aplicación se debe registrar de modo que cada usuario tenga la posibilidad de crear y mantener sus notas.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+_After [running](https://aac-diary-app.herokuapp.com) the application must be registered so that each user has the possibility to create and maintain their notes._
 
-### `yarn test`
+## About this repo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Este repositorio contiene el lado cliente de la aplicación Diary-App, el lado servidor se puede encontrar [aquí](https://github.com/aac-devs/diary-api).
 
-### `yarn build`
+_This repository contains the client side of the Diary-App, the server side can be found [here](https://github.com/aac-devs/diary-api)._
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Las tecnologías usadas para desarrollar este frontend son: React.js, Redux y Material UI, hace uso además de la librería dayjs, prop-types y eslint para garantizar buenas prácticas de codificación.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+_The technologies used to develop this frontend are: React.js, Redux and Material UI, it also makes use of the dayjs library, prop-types and eslint to guarantee good coding practices._
 
-### `yarn eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Luego de clonar el repositorio instale las dependencias a través de:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+_After cloning the repository, install the dependencies through:_
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+npm install
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usage
 
-## Learn More
+&nbsp;
+Para producción, desarrollo y testing:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+&nbsp; _For production, development and testing:_
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+npm start
+npm run dev
+npm run test
+```
